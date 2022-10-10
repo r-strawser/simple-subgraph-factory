@@ -23,6 +23,8 @@ export function handleTransfer(event: TransferEvent): void {
   let nftContract = Collection.load(event.address.toHex());
   if(!nftContract) {
     nftContract = new Collection(event.address.toHex());
+    nftContract.timestamp_added = event.block.timestamp.toI32();
+    nftContract.block_added = event.block.number.toI32();
     nftContract.contractAddress = event.address;
     nftContract.total_transfers = BigInt.fromI32(0);
     nftContract.timestamp_added = event.block.timestamp.toI32();
