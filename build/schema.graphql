@@ -1,0 +1,62 @@
+type Contract @entity {
+  "Custom identifier of a template"
+  id: ID!
+  
+  "Contracts using ERC721 standard"
+  as721: [Collection!]! @derivedFrom(field: "templateType")
+}
+
+type Collection @entity {
+  "The address of the collection"
+  id: ID!
+
+  "The timestamp the collection started syncing"
+  timestamp_added: Int
+
+  "The block nnumber the collection started syncing"
+  block_added: Int
+
+  "The address of the collection"
+  contractAddress: Bytes!
+
+  "The total number of transfer events"
+  total_transfers: BigInt!
+
+  "Contract template type"
+  templateType: Contract!
+  
+  "The last transaction hash"
+  last_tx_hash: String
+
+  "The last transaction timestamp"
+  last_tx_timestamp: Int
+
+  "transfer events"
+  transfers: [Transfer!]! @derivedFrom(field: "contractAddress")
+}
+
+type Transfer @entity {
+  "Transaction hash of the transfer"
+  id: ID!
+
+  "Sender of the NFT"
+  from: Bytes!
+
+  "Receiver of the NFT"
+  to: Bytes!
+
+  "Token ID of the NFT"
+  tokenId: BigInt!
+
+  "Transaction hash"
+  transactionHash: String
+
+  "Timestamp of transfer event"
+  timestamp: Int
+
+  "Block number of transfer event"
+  blockNumber: Int
+
+  "Mapping to the respective collection"
+  contractAddress: Collection!
+}

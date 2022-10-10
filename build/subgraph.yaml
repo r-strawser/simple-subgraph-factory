@@ -1,6 +1,6 @@
 specVersion: 0.0.4
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: Factory
@@ -18,11 +18,11 @@ dataSources:
         - Collection
       abis:
         - name: Factory
-          file: ./abis/Factory.json
+          file: Factory\abis\Factory.json
       eventHandlers:
         - event: ContractAdded(indexed address)
           handler: handleContractAdded
-      file: ./src/factory.ts
+      file: Factory\Factory.wasm
 templates:
   - name: IERC721
     kind: ethereum/contract
@@ -38,8 +38,8 @@ templates:
         - Transfer
       abis:
         - name: IERC721
-          file: ./abis/IERC721.json
+          file: IERC721\abis\IERC721.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/template.ts
+      file: templates\IERC721\IERC721.wasm
