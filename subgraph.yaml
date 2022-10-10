@@ -6,14 +6,16 @@ dataSources:
     name: Factory
     network: aurora-testnet
     source:
-      address: "0x6ba1888A81D35ec0d216DD02CD6e4d18aEAb1F10"
+      address: "0xA03e6e0ACd9C6Ee4403df08B1F4B2a4eccDf72a9"
       abi: Factory
+      startBlock: 101965650
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - ContractAdded
+        - Contract
+        - Collection
       abis:
         - name: Factory
           file: ./abis/Factory.json
@@ -21,3 +23,23 @@ dataSources:
         - event: ContractAdded(indexed address)
           handler: handleContractAdded
       file: ./src/factory.ts
+templates:
+  - name: IERC721
+    kind: ethereum/contract
+    network: aurora-testnet
+    source:
+      abi: IERC721
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Collection
+        - Transfer
+      abis:
+        - name: IERC721
+          file: ./abis/IERC721.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/template.ts
